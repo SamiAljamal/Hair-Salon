@@ -127,5 +127,46 @@ namespace Salon
         conn.Close();
       }
     }
+
+    public static Client Find(int id)
+    {
+      SqlConnection conn = DB.Connection();
+      SqlDataReader rdr = null;
+      conn.Open();
+
+      SqlCommand cmd = new SqlCommand("SELECT * FROM clients  WHERE id = @stylistId;", conn);
+      SqlParameter idParameter = new SqlParameter();
+      idParameter.ParameterName = "@stylistId";
+      idParameter.Value = id.ToString();
+      cmd.Parameters.Add(idParameter);
+      rdr = cmd.ExecuteReader();
+
+      string foundClientName = null;
+      int foundClientStylistId = 0;
+      int foundClientId = 0;
+
+
+      while(rdr.Read())
+      {
+        foundClientName = rdr.GetString(0);
+        foundClientStylistId = rdr.GetInt32(1);
+        foundClientId = rdr.GetInt32(2);
+      }
+      Client foundClient = new Client(
+        foundClientName,
+        foundClientStylistId,
+        foundClientId
+      );
+
+      if (rdr != null)
+      {
+        rdr.Close();
+      }
+      if (conn != null)
+      {
+        conn.Close();
+      }
+      return foundClient;
+    }
   }
 }

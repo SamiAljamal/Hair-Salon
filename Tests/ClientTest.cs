@@ -62,6 +62,26 @@ namespace Salon
       Assert.Equal(0,result);
     }
 
+    [Fact]
+   public void Test_Find_FindsClientAdded()
+   {
+     //Arrange
+     Client firstClient = new Client("john", 0);
+     Client secondClient = new Client("kerry", 1);
+     firstClient.Save();
+     secondClient.Save();
+
+     //Act
+     Client result = Client.Find(secondClient.GetId());
+
+     string nameTest = result.GetName();
+
+     string gaName = Client.GetAll()[1].GetName();
+
+     //Assert
+     Assert.Equal("kerry", nameTest);
+   }
+
 
 
 
