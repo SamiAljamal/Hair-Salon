@@ -12,9 +12,9 @@ namespace Salon
 
     public Client(string Name, int stylistId, int Id= 0)
     {
-      _id = Id;
       _name = Name;
       _stylist_id = stylistId;
+        _id = Id;
     }
 
     public int GetId()
@@ -52,6 +52,7 @@ namespace Salon
         return (idEquality && nameEquality);
       }
     }
+
     public static List<Client> GetAll()
    {
      List<Client> clients =  new List<Client>{};
@@ -92,5 +93,39 @@ namespace Salon
      cmd.ExecuteNonQuery();
    }
 
+   public void Save()
+    {
+      SqlConnection conn = DB.Connection();
+      SqlDataReader rdr;
+      conn.Open();
+
+      SqlCommand cmd = new SqlCommand("INSERT INTO clients (name, stylist_id) OUTPUT INSERTED.id VALUES (@clientName, @stylistId);", conn);
+
+      SqlParameter nameParameter = new SqlParameter();
+      nameParameter.ParameterName = "@clientName";
+      nameParameter.Value = this.GetName();
+
+      SqlParameter stylistIdParameter = new SqlParameter();
+      stylistIdParameter.ParameterName = "@stylistId";
+      stylistIdParameter.Value = this.GetStylistId();
+
+      cmd.Parameters.Add(nameParameter);
+      cmd.Parameters.Add(stylistIdParameter);
+
+      rdr = cmd.ExecuteReader();
+
+      while(rdr.Read())
+      {
+        this._id = rdr.GetInt32(0);
+      }
+      if (rdr != null)
+      {
+        rdr.Close();
+      }
+      if (conn != null)
+      {
+        conn.Close();
+      }
+    }
   }
 }
