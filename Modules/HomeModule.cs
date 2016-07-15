@@ -11,11 +11,12 @@ namespace Salon
       Get["/"]=_=>{
         return View["index.cshtml"];
       };
-      Post["stylist"] =_=> {
+      Post["stylist/new"] =_=> {
         string name = Request.Form["stylist-name"];
         Stylist newStylist = new Stylist(name);
         newStylist.Save();
-        return View["index.cshtml", Stylist.GetAll()];
+        List<Stylist> allStylist = Stylist.GetAll();
+        return View["stylist.cshtml", allStylist];
       };
     }
   }

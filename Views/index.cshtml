@@ -16,16 +16,6 @@
       </form>
     </div>
     <div class="jumbotron">
-      <h2>Stylists:</h2>
-      <ul>
-        @if (Model.Count != 0)
-        {
-          @foreach (var stylist in Model)
-          {
-            <li><a href="/stylist/clients/@stylist.GetId()">@stylist.GetName()</a> | <a href="/stylist/edit/@stylist.GetId()">Edit</a>| <a href="/stylist/delete/@stylist.GetId()">Delete</a></li>
-          }
-        }
-      </ul>
     </div>
   </div>
 </body>
