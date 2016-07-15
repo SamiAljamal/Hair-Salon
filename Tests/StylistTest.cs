@@ -10,12 +10,22 @@ namespace Salon
   {
     public StylistTest()
     {
-      DBConfiguration.ConnectionString = "Data Source=(localdb)\\mssqllocaldb;Initial Catalog=hair_salon_test;Integrated Security=SSPI;";
+      DBConfiguration.ConnectionString = "Data Source=(localdb)\\mssqllocaldb;Initial Catalog= hair_salon_test;Integrated Security=SSPI;";
     }
+
+    [Fact]
+   public void Test_Equal_ReturnsTrueForSameNameForStylist()
+   {
+     Stylist firstStylist = new Stylist("jill");
+     Stylist secondStylist = new Stylist("jill");
+
+     Assert.Equal(firstStylist,secondStylist);
+   }
+
 
     public void Dispose()
     {
-      Salon.DeleteAll();
+      Stylist.DeleteAll();
     }
   }
 }
