@@ -44,45 +44,101 @@ namespace Salon
       }
     }
     public static void DeleteAll()
-   {
-     SqlConnection conn = DB.Connection();
-     conn.Open();
-     SqlCommand cmd = new SqlCommand("DELETE FROM stylist;", conn);
-     cmd.ExecuteNonQuery();
-   }
+    {
+      SqlConnection conn = DB.Connection();
+      conn.Open();
+      SqlCommand cmd = new SqlCommand("DELETE FROM stylist;", conn);
+      cmd.ExecuteNonQuery();
+    }
 
-   public static List<Stylist> GetAll()
-   {
-     List<Stylist> stylists =  new List<Stylist>{};
+    public static List<Stylist> GetAll()
+    {
+      List<Stylist> stylists =  new List<Stylist>{};
 
-     SqlConnection conn = DB.Connection();
-     SqlDataReader rdr = null;
-     conn.Open();
+      SqlConnection conn = DB.Connection();
+      SqlDataReader rdr = null;
+      conn.Open();
 
-     SqlCommand cmd = new SqlCommand("SELECT * FROM stylist;", conn);
-     rdr = cmd.ExecuteReader();
+      SqlCommand cmd = new SqlCommand("SELECT * FROM stylist;", conn);
+      rdr = cmd.ExecuteReader();
 
-     while(rdr.Read())
-     {
-       string stylistName = rdr.GetString(0);
-       int stylistId = rdr.GetInt32(1);
-       Stylist stylist = new Stylist(stylistName, stylistId);
-       stylists.Add(stylist);
-     }
+      while(rdr.Read())
+      {
+        string stylistName = rdr.GetString(0);
+        int stylistId = rdr.GetInt32(1);
+        Stylist stylist = new Stylist(stylistName, stylistId);
+        stylists.Add(stylist);
+      }
 
-     if (rdr != null)
-     {
-       rdr.Close();
-     }
-     if (conn != null)
-     {
-       conn.Close();
-     }
+      if (rdr != null)
+      {
+        rdr.Close();
+      }
+      if (conn != null)
+      {
+        conn.Close();
+      }
 
-     return stylists;
-   }
+      return stylists;
+    }
+    public static Stylist Find(int id)
+    {
+      SqlConnection conn = DB.Connection();
+      SqlDataReader rdr = null;
+      conn.Open();
 
-   public void Save()
+      SqlCommand cmd = new SqlCommand("SELECT * FROM stylist  WHERE id = @StylistId;", conn);
+      SqlParameter idParameter = new SqlParameter();
+      idParameter.ParameterName = "@StylistId";
+      idParameter.Value = id.ToString();
+      cmd.Parameters.Add(idParameter);
+      rdr = cmd.ExecuteReader();
+
+      string foundStylistName = null;
+      int foundStylistId = 0;
+
+
+      while(rdr.Read())
+      {
+        foundStylistName = rdr.GetString(0);
+        foundStylistId = rdr.GetInt32(1);
+      }
+      Stylist foundStylist = new Stylist(
+      foundStylistName,
+      foundStylistId
+      );
+
+      if (rdr != null)
+      {
+        rdr.Close();
+      }
+      if (conn != null)
+      {
+        conn.Close();
+      }
+      return foundStylist;
+    }
+
+    public void Delete()
+    {
+      SqlConnection conn = DB.Connection();
+      conn.Open();
+
+      SqlCommand cmd = new SqlCommand("DELETE FROM stylist WHERE id = @id;", conn);
+
+      SqlParameter stylistIdParameter = new SqlParameter();
+      stylistIdParameter.ParameterName = "@id";
+      stylistIdParameter.Value = this.GetId();
+
+      cmd.Parameters.Add(stylistIdParameter);
+      cmd.ExecuteNonQuery();
+
+      if (conn != null)
+      {
+        conn.Close();
+      }
+    }
+    public void Save()
     {
       SqlConnection conn = DB.Connection();
       SqlDataReader rdr;
@@ -110,104 +166,41 @@ namespace Salon
         conn.Close();
       }
     }
-    public static Stylist Find(int id)
+    public void Update(string newName)
     {
       SqlConnection conn = DB.Connection();
-      SqlDataReader rdr = null;
+      SqlDataReader rdr;
       conn.Open();
 
-      SqlCommand cmd = new SqlCommand("SELECT * FROM stylist  WHERE id = @StylistId;", conn);
-      SqlParameter idParameter = new SqlParameter();
-      idParameter.ParameterName = "@StylistId";
-      idParameter.Value = id.ToString();
-      cmd.Parameters.Add(idParameter);
+      SqlCommand cmd = new SqlCommand("UPDATE stylist SET name = @NewName OUTPUT INSERTED.name WHERE id = @StylistId;", conn);
+
+      SqlParameter newNameParameter = new SqlParameter();
+      newNameParameter.ParameterName = "@NewName";
+      newNameParameter.Value = newName;
+      cmd.Parameters.Add(newNameParameter);
+
+
+      SqlParameter categoryIdParameter = new SqlParameter();
+      categoryIdParameter.ParameterName = "@StylistId";
+      categoryIdParameter.Value = this.GetId();
+      cmd.Parameters.Add(categoryIdParameter);
       rdr = cmd.ExecuteReader();
-
-      string foundStylistName = null;
-      int foundStylistId = 0;
-
 
       while(rdr.Read())
       {
-        foundStylistName = rdr.GetString(0);
-        foundStylistId = rdr.GetInt32(1);
+        this._name = rdr.GetString(0);
       }
-      Stylist foundStylist = new Stylist(
-        foundStylistName,
-        foundStylistId
-      );
 
       if (rdr != null)
       {
         rdr.Close();
       }
+
       if (conn != null)
       {
         conn.Close();
       }
-      return foundStylist;
     }
-
-    public void Delete()
-    {
-    SqlConnection conn = DB.Connection();
-    conn.Open();
-
-    SqlCommand cmd = new SqlCommand("DELETE FROM stylist WHERE id = @id;", conn);
-
-    SqlParameter stylistIdParameter = new SqlParameter();
-    stylistIdParameter.ParameterName = "@id";
-    stylistIdParameter.Value = this.GetId();
-
-    cmd.Parameters.Add(stylistIdParameter);
-    cmd.ExecuteNonQuery();
-
-    if (conn != null)
-    {
-      conn.Close();
-    }
-  }
-  public void Update(string newName)
-   {
-     SqlConnection conn = DB.Connection();
-     SqlDataReader rdr;
-     conn.Open();
-
-     SqlCommand cmd = new SqlCommand("UPDATE stylist SET name = @NewName OUTPUT INSERTED.name WHERE id = @StylistId;", conn);
-
-     SqlParameter newNameParameter = new SqlParameter();
-     newNameParameter.ParameterName = "@NewName";
-     newNameParameter.Value = newName;
-     cmd.Parameters.Add(newNameParameter);
-
-
-     SqlParameter categoryIdParameter = new SqlParameter();
-     categoryIdParameter.ParameterName = "@StylistId";
-     categoryIdParameter.Value = this.GetId();
-     cmd.Parameters.Add(categoryIdParameter);
-     rdr = cmd.ExecuteReader();
-
-     while(rdr.Read())
-     {
-       this._name = rdr.GetString(0);
-     }
-
-     if (rdr != null)
-     {
-       rdr.Close();
-     }
-
-     if (conn != null)
-     {
-       conn.Close();
-     }
-   }
-
-
-
-
-
-
 
   }
 }

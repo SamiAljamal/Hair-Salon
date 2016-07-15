@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css'>
+  <title></title>
+</head>
+<body>
+  <div class="container">
+    <h1>Sami's Hair Salon</h1>
+    <div class="jumbotron">
+      <form action ="stylist/new" method = "post">
+        <label for = "stylist-name">Stylist</label>
+        <input id = "stylist-name" name = "stylist-name" type = "text">
+        <button type = "submit">Add Stylist</button>
+      </form>
+    </div>
+    <div class="jumbotron">
+      <h2>Stylists:</h2>
+      <ul>
+        @if (Model.Count != 0)
+        {
+          @foreach (var stylist in Model)
+          {
+            <li><a href="/stylist/clients/@stylist.GetId()">@stylist.GetName()</a> | <a href="/stylist/edit/@stylist.GetId()">Edit</a>| <a href="/stylist/delete/@stylist.GetId()">Delete</a></li>
+          }
+        }
+      </ul>
+    </div>
+  </div>
+</body>
+</html>
