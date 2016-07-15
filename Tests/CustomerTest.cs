@@ -6,11 +6,11 @@ using System.Data.SqlClient;
 
 namespace Salon
 {
-  public class CustomerTest : IDisposable
+  public class ClientTest : IDisposable
   {
     public StylistTest()
     {
-      DBConfiguration.ConnectionString = "Data Source=(localdb)\\mssqllocaldb;Initial Catalog=salon_test;Integrated Security=SSPI;";
+      DBConfiguration.ConnectionString = "Data Source=(localdb)\\mssqllocaldb;Initial Catalog=hair_salon_test;Integrated Security=SSPI;";
     }
 
     public void Dispose()

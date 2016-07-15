@@ -4,7 +4,7 @@ using System;
 
 namespace Salon
 {
-  public class Customer
+  public class Client
   {
 
 
