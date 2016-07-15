@@ -45,6 +45,24 @@ namespace Salon
 
     }
 
+    [Fact]
+    public void Test_DeleteAll_DeletesClientsFromDB()
+    {
+      //Arrange
+      Client firstClient = new Client("john", 1);
+      Client secondClient = new Client("kerry", 1);
+      firstClient.Save();
+      secondClient.Save();
+
+      //Act
+      Client.DeleteAll();
+      int result = Client.GetAll().Count;
+
+      //Assert
+      Assert.Equal(0,result);
+    }
+
+
 
 
    public void Dispose()
