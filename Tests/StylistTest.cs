@@ -99,6 +99,29 @@ namespace Salon
      //Assert
      Assert.Equal(testStylistList, resultREstaurants);
    }
+   [Fact]
+     public void Test_Update_UpdatesStylistInDatabase()
+     {
+       //Arrange
+       //Arrange
+       Stylist firstStylist = new Stylist("jill");
+       Stylist secondStylist = new Stylist("charilie");
+       firstStylist.Save();
+       secondStylist.Save();
+
+       Stylist result = Stylist.Find(firstStylist.GetId());
+
+       //Act
+       result.Update(secondStylist.GetName());
+
+       Stylist updatedResult = Stylist.Find(firstStylist.GetId());
+
+       //Assert
+       Assert.Equal(secondStylist.GetName(), updatedResult.GetName());
+
+     }
+
+
 
     public void Dispose()
     {
