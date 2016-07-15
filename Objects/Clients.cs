@@ -52,13 +52,45 @@ namespace Salon
         return (idEquality && nameEquality);
       }
     }
-    public static void DeleteAll()
-    {
-      SqlConnection conn = DB.Connection();
-      conn.Open();
-      SqlCommand cmd = new SqlCommand("DELETE FROM clients;", conn);
-      cmd.ExecuteNonQuery();
-    }
+    public static List<Client> GetAll()
+   {
+     List<Client> clients =  new List<Client>{};
+
+     SqlConnection conn = DB.Connection();
+     SqlDataReader rdr = null;
+     conn.Open();
+
+     SqlCommand cmd = new SqlCommand("SELECT * FROM clients;", conn);
+     rdr = cmd.ExecuteReader();
+
+     while(rdr.Read())
+     {
+       string clientName = rdr.GetString(0);
+       int stylistId = rdr.GetInt32(1);
+       int clientID = rdr.GetInt32(2);
+       Client client = new Client(clientName, stylistId, clientID);
+       clients.Add(client);
+     }
+
+     if (rdr != null)
+     {
+       rdr.Close();
+     }
+     if (conn != null)
+     {
+       conn.Close();
+     }
+
+     return clients;
+   }
+
+   public static void DeleteAll()
+   {
+     SqlConnection conn = DB.Connection();
+     conn.Open();
+     SqlCommand cmd = new SqlCommand("DELETE FROM clients;", conn);
+     cmd.ExecuteNonQuery();
+   }
 
   }
 }

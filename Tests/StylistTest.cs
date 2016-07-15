@@ -119,7 +119,9 @@ namespace Salon
        //Assert
        Assert.Equal(secondStylist.GetName(), updatedResult.GetName());
      }
-  
+
+     
+
     public void Dispose()
     {
       Stylist.DeleteAll();

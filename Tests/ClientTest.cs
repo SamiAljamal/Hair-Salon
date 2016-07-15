@@ -22,6 +22,17 @@ namespace Salon
      Assert.Equal(firstClient,secondClient);
    }
 
+   [Fact]
+    public void Test_GetAll_ClientsEmptyAtFirst()
+    {
+      //Arrange, Act
+      int result = Client.GetAll().Count;
+
+      //Assert
+      Assert.Equal(0, result);
+    }
+
+
    public void Dispose()
    {
      Client.DeleteAll();
