@@ -50,6 +50,7 @@ namespace Salon
      SqlCommand cmd = new SqlCommand("DELETE FROM stylist;", conn);
      cmd.ExecuteNonQuery();
    }
+   
    public static List<Stylist> GetAll()
    {
      List<Stylist> stylists =  new List<Stylist>{};
@@ -109,6 +110,8 @@ namespace Salon
         conn.Close();
       }
     }
+
+
 
 
   }

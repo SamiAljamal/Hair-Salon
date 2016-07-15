@@ -32,8 +32,35 @@ namespace Salon
      List<Stylist> testList = new List<Stylist>{testStylist};
 
      Assert.Equal(testList,stylists);
-
    }
+
+   [Fact]
+    public void Test_GetAll_StylistsEmptyAtFirst()
+    {
+      //Arrange, Act
+      int result = Stylist.GetAll().Count;
+
+      //Assert
+      Assert.Equal(0, result);
+    }
+
+    [Fact]
+    public void Test_DeleteAll_DeletesStylistsFromDB()
+    {
+      //Arrange
+      Stylist firstStylist = new Stylist("Greek");
+      Stylist secondStylist = new Stylist("TexMex");
+      firstStylist.Save();
+      secondStylist.Save();
+
+      //Act
+      Stylist.DeleteAll();
+      int result = Stylist.GetAll().Count;
+
+      //Assert
+      Assert.Equal(0,result);
+    }
+
 
 
     public void Dispose()
