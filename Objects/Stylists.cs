@@ -50,7 +50,7 @@ namespace Salon
      SqlCommand cmd = new SqlCommand("DELETE FROM stylist;", conn);
      cmd.ExecuteNonQuery();
    }
-   
+
    public static List<Stylist> GetAll()
    {
      List<Stylist> stylists =  new List<Stylist>{};
@@ -110,6 +110,44 @@ namespace Salon
         conn.Close();
       }
     }
+    public static Stylist Find(int id)
+    {
+      SqlConnection conn = DB.Connection();
+      SqlDataReader rdr = null;
+      conn.Open();
+
+      SqlCommand cmd = new SqlCommand("SELECT * FROM stylist  WHERE id = @StylistId;", conn);
+      SqlParameter idParameter = new SqlParameter();
+      idParameter.ParameterName = "@StylistId";
+      idParameter.Value = id.ToString();
+      cmd.Parameters.Add(idParameter);
+      rdr = cmd.ExecuteReader();
+
+      string foundStylistName = null;
+      int foundStylistId = 0;
+
+
+      while(rdr.Read())
+      {
+        foundStylistName = rdr.GetString(0);
+        foundStylistId = rdr.GetInt32(1);
+      }
+      Stylist foundStylist = new Stylist(
+        foundStylistName,
+        foundStylistId
+      );
+
+      if (rdr != null)
+      {
+        rdr.Close();
+      }
+      if (conn != null)
+      {
+        conn.Close();
+      }
+      return foundStylist;
+    }
+
 
 
 

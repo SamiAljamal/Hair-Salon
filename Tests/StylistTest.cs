@@ -61,6 +61,27 @@ namespace Salon
       Assert.Equal(0,result);
     }
 
+    [Fact]
+   public void Test_Find_FindsStylistAdded()
+   {
+     //Arrange
+     Stylist firstStylist = new Stylist("Greek");
+     Stylist secondStylist = new Stylist("TexMex");
+     firstStylist.Save();
+     secondStylist.Save();
+
+     //Act
+     Stylist result = Stylist.Find(secondStylist.GetId());
+
+     string nameTest = result.GetName();
+
+
+     string gaName = Stylist.GetAll()[1].GetName();
+
+     //Assert
+     Assert.Equal("TexMex", nameTest);
+   }
+
 
 
     public void Dispose()
