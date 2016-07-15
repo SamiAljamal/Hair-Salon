@@ -148,6 +148,26 @@ namespace Salon
       return foundStylist;
     }
 
+    public void Delete()
+    {
+    SqlConnection conn = DB.Connection();
+    conn.Open();
+
+    SqlCommand cmd = new SqlCommand("DELETE FROM stylist WHERE id = @id;", conn);
+
+    SqlParameter stylistIdParameter = new SqlParameter();
+    stylistIdParameter.ParameterName = "@id";
+    stylistIdParameter.Value = this.GetId();
+
+    cmd.Parameters.Add(stylistIdParameter);
+    cmd.ExecuteNonQuery();
+
+    if (conn != null)
+    {
+      conn.Close();
+    }
+  }
+
 
 
 

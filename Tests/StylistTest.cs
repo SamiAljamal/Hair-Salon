@@ -82,7 +82,23 @@ namespace Salon
      Assert.Equal("TexMex", nameTest);
    }
 
+   [Fact]
+   public void Test_Delete_DeletesStylistFromDB()
+   {
+     //Arrange
+     //Arrange
+     Stylist firstStylist = new Stylist("jill");
+     Stylist secondStylist = new Stylist("charlie");
+     firstStylist.Save();
+     secondStylist.Save();
+     //Act
+     firstStylist.Delete();
+     List<Stylist> resultREstaurants = Stylist.GetAll();
+     List<Stylist> testStylistList = new List<Stylist> {secondStylist};
 
+     //Assert
+     Assert.Equal(testStylistList, resultREstaurants);
+   }
 
     public void Dispose()
     {
