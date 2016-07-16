@@ -5,9 +5,14 @@
     <title></title>
   </head>
   <body>
-    <h2>@Model.GetName() client list!</h2>
-    <p>
-      <h2></h2>
-    </p>
+    <div class="jumbotron">
+      <h2>@Model.GetName() client list!</h2>
+      <h3>Add a new client</h3>
+      <form action ="clients/new" method = "post">
+        <label for = "stylist-name">Clients</label>
+        <input id = "client-name" name = "client-name" type = "text" required>
+        <button type = "submit">Add clients</button>
+      </form>
+
   </body>
 </html>

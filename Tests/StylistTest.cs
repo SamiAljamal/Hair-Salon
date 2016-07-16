@@ -119,7 +119,27 @@ namespace Salon
        //Assert
        Assert.Equal(secondStylist.GetName(), updatedResult.GetName());
      }
-     
+
+     [Fact]
+    public void Test_GetClients_RetrievesAllClientsWithStylist()
+    {
+      //Arrange
+      Stylist testStylist = new Stylist("john");
+      testStylist.Save();
+
+      //Act
+      Client firstClient = new Client("judy", testStylist.GetId());
+      Client secondClient = new Client("charles", testStylist.GetId());
+      firstClient.Save();
+      secondClient.Save();
+
+      List<Client> testclientList = new List<Client> {firstClient, secondClient};
+      List<Client> resultclientList = testStylist.GetClients();
+
+      //Assert
+      Assert.Equal(testclientList[0].GetStylistId(), resultclientList[0].GetStylistId());
+    }
+
 
 
 

@@ -28,10 +28,12 @@ namespace Salon
         return View["stylist.cshtml", stylist];
       };
 
-      Delete["/stylists/clearall"] =_=>{
+      Delete["/stylist/clearall"] =_=>{
         Stylist.DeleteAll();
         return View["stylists.cshtml", Stylist.GetAll()];
       };
+
+    
 
     }
   }

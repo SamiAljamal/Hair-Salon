@@ -201,6 +201,37 @@ namespace Salon
         conn.Close();
       }
     }
+    public List<Client> GetClients()
+    {
+      SqlConnection conn = DB.Connection();
+      SqlDataReader rdr = null;
+      conn.Open();
+
+      SqlCommand cmd = new SqlCommand("SELECT * FROM clients WHERE stylist_id = @CategoryId;", conn);
+      SqlParameter categoryIdParameter = new SqlParameter();
+      categoryIdParameter.ParameterName = "@CategoryId";
+      categoryIdParameter.Value = this.GetId();
+      cmd.Parameters.Add(categoryIdParameter);
+      rdr = cmd.ExecuteReader();
+
+      List<Client> clients = new List<Client> {};
+      while(rdr.Read())
+      {
+        string clientName= rdr.GetString(0);
+        int clientStylistId = rdr.GetInt32(1);
+        Client newClient = new Client(clientName, clientStylistId);
+        clients.Add(newClient);
+      }
+      if (rdr != null)
+      {
+        rdr.Close();
+      }
+      if (conn != null)
+      {
+        conn.Close();
+      }
+      return clients;
+    }
 
   }
 }
