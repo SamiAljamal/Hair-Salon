@@ -14,17 +14,22 @@
     }
     else
     {
-      <h1>Here is your list of stylists:</h1>
+      <h2>Here is your list of stylists:</h2>
+      <h3>Click on Stylist to view list of their Clients!</h3>
       <ul>
         @foreach (var item in Model)
         {
-          <li><a href="/stylist/@item.GetId()">@item.GetName()</a>| <a href="/stylist/edit/@item.GetId()">Edit</a>| <a href="/cuisines/delete/@item.GetId()">Delete</a></li>
+          <li><a href="/stylist/@item.GetId()">@item.GetName()</a>| <a href="/stylist/edit/@item.GetId()">Edit</a>| <a href="/stylist/delete/@item.GetId()">Delete</a></li>
         }
       </ul>
     }
+  </div>
+  <form action="/stylists/clearall" method="post">
+    <input type="hidden" name="_method" value="DELETE">
+    <button type="submit">Delete</button>
+  </form>
+  
+  <p><a href="/">Back home</a></p>
 
-
-    </div>
-
-  </body>
-  </html>
+</body>
+</html>

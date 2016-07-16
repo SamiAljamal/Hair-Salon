@@ -11,6 +11,9 @@ namespace Salon
       Get["/"]=_=>{
         return View["index.cshtml"];
       };
+      Get["/stylists"] =_=>{
+        return View["stylists.cshtml",Stylist.GetAll()];
+      };
       Post["stylist/new"] =_=> {
         string name = Request.Form["stylist-name"];
         Stylist newStylist = new Stylist(name);
@@ -21,7 +24,13 @@ namespace Salon
 
       Get["/stylist/{id}"] =parameters=>{
         Stylist stylist = Stylist.Find(parameters.id);
-        return View["stylist.cshtml"];
+        stylist.GetName();
+        return View["stylist.cshtml", stylist];
+      };
+
+      Delete["/stylists/clearall"] =_=>{
+        Stylist.DeleteAll();
+        return View["stylists.cshtml", Stylist.GetAll()];
       };
 
     }
