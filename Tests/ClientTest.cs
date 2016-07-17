@@ -10,19 +10,19 @@ namespace Salon
   {
     public ClientTest()
     {
-      DBConfiguration.ConnectionString = "Data Source=(localdb)\\mssqllocaldb;Initial Catalog= hair_salon_test;Integrated Security=SSPI;";
+      DBConfiguration.ConnectionString = "Data Source=(localdb)\\mssqllocaldb;Initial Catalog=hair_salon_test;Integrated Security=SSPI;";
     }
 
     [Fact]
-   public void Test_Equal_ReturnsTrueForSameNameClient()
-   {
-     Client firstClient = new Client("John", 1);
-     Client secondClient = new Client("John", 1);
+    public void Test_Equal_ReturnsTrueForSameNameIDPhoneNumber()
+    {
+      Client firstClient = new Client("lardo", 1);
+      Client secondClient = new Client("lardo", 1);
 
-     Assert.Equal(firstClient,secondClient);
-   }
+      Assert.Equal(firstClient,secondClient);
+    }
 
-   [Fact]
+    [Fact]
     public void Test_GetAll_ClientsEmptyAtFirst()
     {
       //Arrange, Act
@@ -35,22 +35,21 @@ namespace Salon
     [Fact]
     public void Test_Save_SaveClientstoDB()
     {
-      Client testClient = new Client("john", 1);
+      Client testClient = new Client("lardo", 1);
       testClient.Save();
 
-      List<Client> clients = Client.GetAll();
+      List<Client> restaurants = Client.GetAll();
       List<Client> testList = new List<Client>{testClient};
 
-      Assert.Equal(testList,clients);
+      Assert.Equal(testList,restaurants);
 
     }
-
     [Fact]
     public void Test_DeleteAll_DeletesClientsFromDB()
     {
       //Arrange
-      Client firstClient = new Client("john", 1);
-      Client secondClient = new Client("kerry", 1);
+      Client firstClient = new Client("lardo", 1);
+      Client secondClient = new Client("Chaba Thai", 1);
       firstClient.Save();
       secondClient.Save();
 
@@ -63,70 +62,88 @@ namespace Salon
     }
 
     [Fact]
-   public void Test_Find_FindsClientAdded()
-   {
-     //Arrange
-     Client firstClient = new Client("john", 0);
-     Client secondClient = new Client("kerry", 1);
-     firstClient.Save();
-     secondClient.Save();
-
-     //Act
-     Client result = Client.Find(secondClient.GetId());
-
-     string nameTest = result.GetName();
-
-     string gaName = Client.GetAll()[1].GetName();
-
-     //Assert
-     Assert.Equal("kerry", nameTest);
-   }
-   [Fact]
-   public void Test_Delete_DeletesClientFromDB()
-   {
-     //Arrange
-     //Arrange
-     Client firstClient = new Client("joh ", 0);
-     Client secondClient = new Client("jerry", 1);
-     firstClient.Save();
-     secondClient.Save();
-     //Act
-     firstClient.Delete();
-     List<Client> resultClients = Client.GetAll();
-     List<Client> testClientList = new List<Client> {secondClient};
-
-
-
-     //Assert
-     Assert.Equal(testClientList, resultClients);
-   }
-
-   [Fact]
-    public void Test_Update_UpdatesNameInDatabase()
+    public void Test_Find_FindsClientAdded()
     {
       //Arrange
-      Client firstClient = new Client("john", 1);
+      Client firstClient = new Client("lardo", 0);
+      Client secondClient = new Client("Chaba Thai", 1);
       firstClient.Save();
+      secondClient.Save();
 
       //Act
-      firstClient.Update("kerry", 3);
-      Client resultClient = Client.Find(firstClient.GetId());
+      Client result = Client.Find(secondClient.GetId());
+
+      string nameTest = result.GetName();
+      Console.WriteLine("From Find:  " + nameTest);
+
+      string gaName = Client.GetAll()[1].GetName();
+      Console.WriteLine("From GetAll:  " + gaName);
 
       //Assert
-      Assert.Equal("kerry", firstClient.GetName());
-      Assert.Equal("kerry", resultClient.GetName());
-      Assert.Equal(3 , firstClient.GetStylistId());
-      Assert.Equal(3 , resultClient.GetStylistId());
+      Assert.Equal("Chaba Thai", nameTest);
+    }
+    [Fact]
+    public void Test_Delete_DeletesClientFromDB()
+    {
+      //Arrange
+      //Arrange
+      Client firstClient = new Client("lardo", 0);
+      Client secondClient = new Client("Chaba Thai", 1);
+      firstClient.Save();
+      secondClient.Save();
+      //Act
+      firstClient.Delete();
+      List<Client> resultREstaurants = Client.GetAll();
+      List<Client> testClientList = new List<Client> {secondClient};
+
+
+
+      //Assert
+      Assert.Equal(testClientList, resultREstaurants);
     }
 
+    [Fact]
+      public void Test_Update_UpdatesClientInDatabase()
+      {
+        //Arrange
+        //Arrange
+        Client firstClient = new Client("lardo", 0);
+        Client secondClient = new Client("Chaba Thai", 1);
+        firstClient.Save();
+        secondClient.Save();
 
+        Client result = Client.Find(firstClient.GetId());
 
+        //Act
+        result.Update(secondClient.GetName(), secondClient.GetStylistId());
 
+        Client updatedResult = Client.Find(firstClient.GetId());
 
+        //Assert
+        Assert.Equal(secondClient.GetName(), updatedResult.GetName());
+        Assert.Equal(secondClient.GetStylistId() , updatedResult.GetStylistId());
+      }
 
-   public void Dispose()
-   {
-     Client.DeleteAll();
-   }
+      [Fact]
+      public void Test_GetStylist_ReturnsNameForInputID()
+      {
+
+        //Arrange
+        Stylist firstStylist = new Stylist("Thai");
+        firstStylist.Save();
+
+        Client firstClient = new Client("lardo", firstStylist.GetId());
+
+        //Act
+        string result = firstClient.GetStylist();
+
+        Assert.Equal("Thai",result);
+      }
+
+    //
+    public void Dispose()
+    {
+      Client.DeleteAll();
+    }
   }
 }
