@@ -9,31 +9,31 @@ namespace Salon
     public HomeModule()
     {
       Get["/"]=_=>{
-        return View["index.cshtml"];
-      };
-      Get["/stylists"] =_=>{
-        return View["stylists.cshtml",Stylist.GetAll()];
-      };
-      Post["stylist/new"] =_=> {
-        string name = Request.Form["stylist-name"];
-        Stylist newStylist = new Stylist(name);
-        newStylist.Save();
         List<Stylist> allStylist = Stylist.GetAll();
-        return View["stylists.cshtml", allStylist];
+        return View["index.cshtml", allStylist];
+      };
+      Post["/"] = _ => {
+        Stylist stylist = new Stylist(Request.Form["stylist-name"]);
+        stylist.Save();
+        List<Stylist> allStylist = Stylist.GetAll();
+        return View["index.cshtml", allStylist];
       };
 
-      Get["/stylist/{id}"] =parameters=>{
-        Stylist stylist = Stylist.Find(parameters.id);
-        stylist.GetName();
-        return View["stylist.cshtml", stylist];
+      Delete["/stylist/delete/{id}"] = paramaters => {
+        Stylist Selectedstylist = Stylist.Find(paramaters.id);
+        Selectedstylist.Delete();
+        return View["index.cshtml", Stylist.GetAll()];
       };
 
-      Delete["/stylist/clearall"] =_=>{
-        Stylist.DeleteAll();
-        return View["stylists.cshtml", Stylist.GetAll()];
+      Get["stylists/{id}/clients"] = paramaters => {
+        Stylist stylist = Stylist.Find(paramaters.id);
+        return View["stylist.cshtml",stylist.GetClients()];
       };
 
-    
+
+
+
+
 
     }
   }

@@ -133,11 +133,10 @@ namespace Salon
 
         //Act
         Client firstClient = new Client("lardo", testStylist.GetId());
-        Client secondClient = new Client("Chaba Thai", testStylist.GetId());
         firstClient.Save();
-        secondClient.Save();
 
-        List<Client> testClientList = new List<Client> {firstClient, secondClient};
+
+        List<Client> testClientList = new List<Client> {firstClient};
         List<Client> resultClientList = testStylist.GetClients();
 
         //Assert

@@ -9,13 +9,34 @@
   <div class="container">
     <h1>Sami's Hair Salon</h1>
     <div class="jumbotron">
-      <form action ="stylist/new" method = "post">
-        <label for = "stylist-name">Stylist</label>
-        <input id = "stylist-name" name = "stylist-name" type = "text" required>
-        <button type = "submit">Add Stylist</button>
-      </form>
-      <a href="/stylists">view Stylists</a>
+      <form action = "/" method = "post">
+       <label for = "stylist-name">Name</label>
+       <input id = "stylist-name" name = "stylist-name" type = "text">
+       <button type = "submit">Add Stylist</button>
+     </form>
+
     </div>
+    <h2>Stylists</h2>
+    <ul>
+      @if (Model.Count != 0)
+      {
+        @foreach (var stylist in Model)
+        {
+          <li><h3><a href="/stylists/@stylist.GetId()/clients"> @stylist.GetName()</a></h3>
+              <form  action="/stylist/edit/@stylist.GetId()" method="get">
+                <button type="submit" name=> Edit</button>
+              </form>
+              <form action="/stylist/delete/@stylist.GetId()" method="post">
+                <input type="hidden" name="_method" value="DELETE">
+                <button type="submit" name=> Delete</button>
+              </form>
+           </li>
+        }
+      }
+      else{
+        <p>No Stylists have been Listed!</p>
+      }
+    </ul>
   </div>
 </body>
 </html>

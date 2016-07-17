@@ -221,7 +221,8 @@ namespace Salon
       {
         string clientName= rdr.GetString(0);
         int clientStylistId = rdr.GetInt32(1);
-        Client newClient = new Client(clientName, clientStylistId);
+        int id = rdr.GetInt32(2);
+        Client newClient = new Client(clientName, clientStylistId, id);
         clients.Add(newClient);
       }
       if (rdr != null)
