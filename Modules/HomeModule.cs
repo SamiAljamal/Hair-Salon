@@ -25,15 +25,14 @@ namespace Salon
         return View["index.cshtml", Stylist.GetAll()];
       };
 
-      Get["stylists/{id}/clients"] = paramaters => {
+      Get["/stylists/{id}/clients"] = paramaters => {
+        Dictionary<string, object> clients = new Dictionary<string, object>();
         Stylist stylist = Stylist.Find(paramaters.id);
-        return View["stylist.cshtml",stylist.GetClients()];
+        List<Client> allClients = Stylist.GetClients(stylist.GetId());
+        clients.Add("stylist", stylist);
+        clients.Add("clients", allClients);
+        return View["stylist.cshtml",clients];
       };
-
-
-
-
-
 
     }
   }

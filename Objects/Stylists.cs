@@ -30,6 +30,11 @@ namespace Salon
       }
     }
 
+    public void SetId(int ID)
+    {
+      _id = ID;
+    }
+
     public int GetId()
     {
       return _id;
@@ -203,7 +208,7 @@ namespace Salon
       return foundStylist;
     }
 
-    public List<Client> GetClients()
+    public static List<Client> GetClients(int StylistID)
     {
       SqlConnection conn = DB.Connection();
       SqlDataReader rdr = null;
@@ -212,7 +217,7 @@ namespace Salon
       SqlCommand cmd = new SqlCommand("SELECT * FROM clients WHERE stylist_id = @CategoryId;", conn);
       SqlParameter categoryIdParameter = new SqlParameter();
       categoryIdParameter.ParameterName = "@CategoryId";
-      categoryIdParameter.Value = this.GetId();
+      categoryIdParameter.Value = StylistID;
       cmd.Parameters.Add(categoryIdParameter);
       rdr = cmd.ExecuteReader();
 

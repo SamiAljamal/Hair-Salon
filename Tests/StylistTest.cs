@@ -137,10 +137,10 @@ namespace Salon
 
 
         List<Client> testClientList = new List<Client> {firstClient};
-        List<Client> resultClientList = testStylist.GetClients();
+        List<Client> resultClientList = Stylist.GetClients(testStylist.GetId());
 
         //Assert
-        Assert.Equal(testClientList[0].GetStylistId(), resultClientList[0].GetStylistId());
+        Assert.Equal(testClientList, resultClientList);
       }
 
 

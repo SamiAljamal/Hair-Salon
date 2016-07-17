@@ -2,13 +2,39 @@
 <html>
   <head>
     <meta charset="utf-8">
+    <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css'>
     <title></title>
   </head>
   <body>
-    <div class="jumbotron">
+    <div class="container">
+      <div class="jumbotron">
+          <h3>@Model["stylist"].GetName()'s client list</h3>
+          @if (Model.Count != 0)
+          {
+            @foreach (var client in Model["clients"])
+            {
+              <li><h3> @client.GetName()</a></h3>
+                  <form  action="/clients/edit/@client.GetId()" method="get">
+                    <button type="submit" name=> Edit</button>
+                  </form>
+                  <form action="/clients/delete/@client.GetId()" method="post">
+                    <input type="hidden" name="_method" value="DELETE">
+                    <button type="submit" name=> Delete</button>
+                  </form>
+               </li>
+            }
+          }
+          else
+          {
+              <h2>@Model["stylist"].GetName() does not have any clients yet</h2>
+
+          }
+      </div>
+    </div>
+
       <h3>Add a new client</h3>
-      <form action ="clients/new" method = "post">
-        <label for = "stylist-name">Clients</label>
+      <form action ="clients/new/@Model["stylist"].GetId()" method = "post">
+        <label for = "client-name">Clients</label>
         <input id = "client-name" name = "client-name" type = "text" required>
         <button type = "submit">Add clients</button>
       </form>
