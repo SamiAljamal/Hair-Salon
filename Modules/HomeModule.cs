@@ -46,6 +46,24 @@ namespace Salon
         return View["stylist.cshtml",clients];
       };
 
+
+      Get["/clients/edit/{id}"] = parameters => {
+        Client editClient = Client.Find(parameters.id);
+        return View["client_edit.cshtml",editClient];
+      };
+
+      Patch["/client/edit/{id}"] = parameters => {
+        Client editClient = Client.Find(parameters.id);
+        editClient.Update(Request.Form["clientname"],editClient.GetStylistId());
+
+        Dictionary<string, object> clients = new Dictionary<string, object>();
+        Stylist stylist = Stylist.Find(editClient.GetStylistId());
+        List<Client> allClients = Stylist.GetClients(editClient.GetStylistId());
+        clients.Add("stylist", stylist);
+        clients.Add("clients", allClients);
+        return View["stylist.cshtml", clients];
+      };
+
       Post["/clients/new/{id}"] =parameters=> {
         int stylist= parameters.id;
         Client newClient = new Client(Request.Form["client-name"], stylist);
@@ -59,12 +77,19 @@ namespace Salon
         return View["stylist.cshtml", clients];
       };
 
-      Get["/clients/edit/{id}"] = parameters => {
-        Client editClient = Client.Find(parameters.id);
-        return View["client_edit.cshtml",editClient];
+      Delete["/clients/delete/{id}"] = parameters=> {
+
+        Client deleteclient = Client.Find(parameters.id);
+        deleteclient.Delete();
+        int stylistID = deleteclient.GetStylistId();
+        Dictionary<string, object> deleteClientDic = new Dictionary<string, object>();
+        Stylist stylists = Stylist.Find(stylistID);
+        List<Client> allClients = Stylist.GetClients(stylists.GetId());
+        deleteClientDic.Add("stylist", stylists);
+        deleteClientDic.Add("clients", allClients);
+        return View["stylist.cshtml", deleteClientDic];
+
       };
-
-
     }
   }
 }

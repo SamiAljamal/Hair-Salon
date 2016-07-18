@@ -35,7 +35,7 @@ namespace Salon
     [Fact]
     public void Test_Save_SaveClientstoDB()
     {
-      Client testClient = new Client("lardo", 1);
+      Client testClient = new Client("john", 1);
       testClient.Save();
 
       List<Client> restaurants = Client.GetAll();
@@ -48,8 +48,8 @@ namespace Salon
     public void Test_DeleteAll_DeletesClientsFromDB()
     {
       //Arrange
-      Client firstClient = new Client("lardo", 1);
-      Client secondClient = new Client("Chaba Thai", 1);
+      Client firstClient = new Client("john", 1);
+      Client secondClient = new Client("terry", 1);
       firstClient.Save();
       secondClient.Save();
 
@@ -65,8 +65,8 @@ namespace Salon
     public void Test_Find_FindsClientAdded()
     {
       //Arrange
-      Client firstClient = new Client("lardo", 0);
-      Client secondClient = new Client("Chaba Thai", 1);
+      Client firstClient = new Client("john", 0);
+      Client secondClient = new Client("terry", 1);
       firstClient.Save();
       secondClient.Save();
 
@@ -80,15 +80,15 @@ namespace Salon
       Console.WriteLine("From GetAll:  " + gaName);
 
       //Assert
-      Assert.Equal("Chaba Thai", nameTest);
+      Assert.Equal("terry", nameTest);
     }
     [Fact]
     public void Test_Delete_DeletesClientFromDB()
     {
       //Arrange
       //Arrange
-      Client firstClient = new Client("lardo", 0);
-      Client secondClient = new Client("Chaba Thai", 1);
+      Client firstClient = new Client("john", 0);
+      Client secondClient = new Client("terry", 1);
       firstClient.Save();
       secondClient.Save();
       //Act
@@ -107,8 +107,8 @@ namespace Salon
       {
         //Arrange
         //Arrange
-        Client firstClient = new Client("lardo", 0);
-        Client secondClient = new Client("Chaba Thai", 1);
+        Client firstClient = new Client("john", 0);
+        Client secondClient = new Client("terry", 1);
         firstClient.Save();
         secondClient.Save();
 
@@ -129,7 +129,7 @@ namespace Salon
       {
 
         //Arrange
-        Stylist firstStylist = new Stylist("Thai");
+        Stylist firstStylist = new Stylist("john");
         firstStylist.Save();
 
         Client firstClient = new Client("lardo", firstStylist.GetId());
@@ -137,7 +137,7 @@ namespace Salon
         //Act
         string result = firstClient.GetStylist();
 
-        Assert.Equal("Thai",result);
+        Assert.Equal("john",result);
       }
 
     //

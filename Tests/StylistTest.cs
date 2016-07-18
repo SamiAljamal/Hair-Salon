@@ -35,7 +35,7 @@ namespace Salon
     [Fact]
     public void Test_Save_SaveStyliststoDB()
     {
-      Stylist testStylist = new Stylist("Bavarian");
+      Stylist testStylist = new Stylist("jill");
       testStylist.Save();
 
       List<Stylist> stylists = Stylist.GetAll();
@@ -48,8 +48,8 @@ namespace Salon
     public void Test_DeleteAll_DeletesStylistsFromDB()
     {
       //Arrange
-      Stylist firstStylist = new Stylist("Greek");
-      Stylist secondStylist = new Stylist("TexMex");
+      Stylist firstStylist = new Stylist("jill");
+      Stylist secondStylist = new Stylist("bill");
       firstStylist.Save();
       secondStylist.Save();
 
@@ -65,8 +65,8 @@ namespace Salon
     public void Test_Find_FindsStylistAdded()
     {
       //Arrange
-      Stylist firstStylist = new Stylist("Greek");
-      Stylist secondStylist = new Stylist("TexMex");
+      Stylist firstStylist = new Stylist("jill");
+      Stylist secondStylist = new Stylist("bill");
       firstStylist.Save();
       secondStylist.Save();
 
@@ -80,7 +80,7 @@ namespace Salon
       Console.WriteLine("From GetAll:  " + gaName);
 
       //Assert
-      Assert.Equal("TexMex", nameTest);
+      Assert.Equal("bill", nameTest);
     }
 
     [Fact]
@@ -88,8 +88,8 @@ namespace Salon
     {
       //Arrange
       //Arrange
-      Stylist firstStylist = new Stylist("lardo");
-      Stylist secondStylist = new Stylist("Chaba Thai");
+      Stylist firstStylist = new Stylist("john");
+      Stylist secondStylist = new Stylist("terry");
       firstStylist.Save();
       secondStylist.Save();
       //Act
@@ -108,8 +108,8 @@ namespace Salon
       {
         //Arrange
         //Arrange
-        Stylist firstStylist = new Stylist("lardo");
-        Stylist secondStylist = new Stylist("Chaba Thai");
+        Stylist firstStylist = new Stylist("john");
+        Stylist secondStylist = new Stylist("terry");
         firstStylist.Save();
         secondStylist.Save();
 
@@ -128,11 +128,11 @@ namespace Salon
       public void Test_GetClients_RetrievesAllClientssWithStylist()
       {
         //Arrange
-        Stylist testStylist = new Stylist("texmex");
+        Stylist testStylist = new Stylist("john");
         testStylist.Save();
 
         //Act
-        Client firstClient = new Client("lardo", testStylist.GetId());
+        Client firstClient = new Client("terry", testStylist.GetId());
         firstClient.Save();
 
 

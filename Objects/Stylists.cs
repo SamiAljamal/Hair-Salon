@@ -107,7 +107,6 @@ namespace Salon
       }
     }
 
-
     public void Update(string newName)
     {
       SqlConnection conn = DB.Connection();
@@ -143,6 +142,7 @@ namespace Salon
         conn.Close();
       }
     }
+
     public void Delete()
     {
       SqlConnection conn = DB.Connection();
@@ -162,6 +162,7 @@ namespace Salon
         conn.Close();
       }
     }
+
     public static void DeleteAll()
     {
       SqlConnection conn = DB.Connection();
@@ -240,7 +241,5 @@ namespace Salon
       }
       return clients;
     }
-
-
   }
 }

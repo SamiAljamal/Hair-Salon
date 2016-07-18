@@ -15,8 +15,6 @@ namespace Salon
       _id = Id;
       _name = Name;
       _stylist_id = stylistID;
-
-
     }
 
     public override bool Equals(System.Object otherClient)
@@ -124,8 +122,6 @@ namespace Salon
       }
     }
 
-
-
     public void Update(string newName, int stylist_id)
     {
       SqlConnection conn = DB.Connection();
@@ -143,7 +139,6 @@ namespace Salon
       stylistIdParameter.ParameterName = "@StylistID";
       stylistIdParameter.Value = stylist_id;
       cmd.Parameters.Add(stylistIdParameter);
-
 
       SqlParameter categoryIdParameter = new SqlParameter();
       categoryIdParameter.ParameterName = "@CategoryId";
@@ -168,6 +163,7 @@ namespace Salon
         conn.Close();
       }
     }
+
     public void Delete()
     {
       SqlConnection conn = DB.Connection();
@@ -187,6 +183,7 @@ namespace Salon
         conn.Close();
       }
     }
+
     public static void DeleteAll()
     {
       SqlConnection conn = DB.Connection();
@@ -212,7 +209,6 @@ namespace Salon
       int foundClientStylistId = 0;
       int foundClientId = 0;
 
-
       while(rdr.Read())
       {
         foundClientName = rdr.GetString(0);
@@ -237,6 +233,5 @@ namespace Salon
       }
       return foundClient;
     }
-
   }
 }

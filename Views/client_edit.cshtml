@@ -10,10 +10,11 @@
       <h2>Edit client!</h2>
       <form action = "/client/edit/@Model.GetId()" method = "post">
      <input type="hidden" name="_method" value="PATCH">
-     <label for = "clientname">Stylists Name</label>
-     <input id = "clientname" name = "clientname" type = "text">
+     <label for = "clientname">Client</label>
+     <input id = "clientname" name = "clientname" type = "text" value = "@Model.GetName()">
      <button type = "submit" >Edit!</button>
    </form>
+   <a href="/">return home</a>
 
 
     </div>
