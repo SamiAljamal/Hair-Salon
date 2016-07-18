@@ -25,6 +25,20 @@ namespace Salon
         return View["index.cshtml", Stylist.GetAll()];
       };
 
+      Get["/stylist/edit/{id}"] = parameters => {
+        Stylist editStylist = Stylist.Find(parameters.id);
+        return View["stylist_edit.cshtml",editStylist];
+      };
+
+      Patch["/stylist/edit/{id}"] = parameters => {
+        Stylist editStylist = Stylist.Find(parameters.id);
+        editStylist.Update(Request.Form["stylistName"]);
+        return View["index.cshtml", Stylist.GetAll()];
+
+      };
+
+
+
       Get["/stylists/{id}/clients"] = paramaters => {
         Dictionary<string, object> clients = new Dictionary<string, object>();
         Stylist stylist = Stylist.Find(paramaters.id);
@@ -32,6 +46,20 @@ namespace Salon
         clients.Add("stylist", stylist);
         clients.Add("clients", allClients);
         return View["stylist.cshtml",clients];
+      };
+
+      Post["/clients/new/{id}"] =parameters=> {
+        int stylist= parameters.id;
+        Client newClient = new Client(Request.Form["client-name"], stylist);
+        newClient.Save();
+        Dictionary <string, object> clients = new Dictionary<string, object>();
+        Stylist stylists = Stylist.Find(stylist);
+        List<Client> allClients = Stylist.GetClients(stylists.GetId());
+        clients.Add("stylist", stylists);
+        clients.Add("clients", allClients);
+
+        return View["stylist.cshtml", clients];
+
       };
 
     }
