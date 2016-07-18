@@ -34,9 +34,7 @@ namespace Salon
         Stylist editStylist = Stylist.Find(parameters.id);
         editStylist.Update(Request.Form["stylistName"]);
         return View["index.cshtml", Stylist.GetAll()];
-
       };
-
 
 
       Get["/stylists/{id}/clients"] = paramaters => {
@@ -59,8 +57,13 @@ namespace Salon
         clients.Add("clients", allClients);
 
         return View["stylist.cshtml", clients];
-
       };
+
+      Get["/clients/edit/{id}"] = parameters => {
+        Client editClient = Client.Find(parameters.id);
+        return View["client_edit.cshtml",editClient];
+      };
+
 
     }
   }
