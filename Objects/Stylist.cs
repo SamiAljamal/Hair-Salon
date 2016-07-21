@@ -55,7 +55,7 @@ namespace Salon
       SqlDataReader rdr = null;
       conn.Open();
 
-      SqlCommand cmd = new SqlCommand("SELECT * FROM stylist;", conn);
+      SqlCommand cmd = new SqlCommand("SELECT * FROM stylists;", conn);
       rdr = cmd.ExecuteReader();
 
       while(rdr.Read())
@@ -84,7 +84,7 @@ namespace Salon
       SqlDataReader rdr;
       conn.Open();
 
-      SqlCommand cmd = new SqlCommand("INSERT INTO stylist (name) OUTPUT INSERTED.id VALUES (@StylistName);", conn);
+      SqlCommand cmd = new SqlCommand("INSERT INTO stylists (name) OUTPUT INSERTED.id VALUES (@StylistName);", conn);
 
       SqlParameter nameParameter = new SqlParameter();
       nameParameter.ParameterName = "@StylistName";
@@ -113,7 +113,7 @@ namespace Salon
       SqlDataReader rdr;
       conn.Open();
 
-      SqlCommand cmd = new SqlCommand("UPDATE stylist SET name = @NewName OUTPUT INSERTED.name WHERE id = @CategoryId;", conn);
+      SqlCommand cmd = new SqlCommand("UPDATE stylists SET name = @NewName OUTPUT INSERTED.name WHERE id = @CategoryId;", conn);
 
       SqlParameter newNameParameter = new SqlParameter();
       newNameParameter.ParameterName = "@NewName";
@@ -148,7 +148,7 @@ namespace Salon
       SqlConnection conn = DB.Connection();
       conn.Open();
 
-      SqlCommand cmd = new SqlCommand("DELETE FROM stylist WHERE id = @id;", conn);
+      SqlCommand cmd = new SqlCommand("DELETE FROM stylists WHERE id = @id;", conn);
 
       SqlParameter categoryIdParameter = new SqlParameter();
       categoryIdParameter.ParameterName = "@id";
@@ -167,7 +167,7 @@ namespace Salon
     {
       SqlConnection conn = DB.Connection();
       conn.Open();
-      SqlCommand cmd = new SqlCommand("DELETE FROM stylist;", conn);
+      SqlCommand cmd = new SqlCommand("DELETE FROM stylists;", conn);
       cmd.ExecuteNonQuery();
     }
 
@@ -177,7 +177,7 @@ namespace Salon
       SqlDataReader rdr = null;
       conn.Open();
 
-      SqlCommand cmd = new SqlCommand("SELECT * FROM stylist  WHERE id = @StylistId;", conn);
+      SqlCommand cmd = new SqlCommand("SELECT * FROM stylists  WHERE id = @StylistId;", conn);
       SqlParameter idParameter = new SqlParameter();
       idParameter.ParameterName = "@StylistId";
       idParameter.Value = id.ToString();
