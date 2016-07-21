@@ -17,23 +17,22 @@
           <h3>@Model["stylist"].GetName()'s client list</h3>
           @if (Model["clients"].Count != 0)
           {
-            @foreach (var client in Model["clients"])
-            {
-              <li><h3> @client.GetName()</a></h3>
-                  <form  action="/clients/edit/@client.GetId()" method="get">
-                    <button type="submit" name=> Edit</button>
-                  </form>
+            <ul>
+              @foreach (var client in Model["clients"])
+              {
+                <li><h3> @client.GetName()</a></h3>
+                  <a href="/clients/edit/@client.GetId()"><button type="button" name=> Edit</button></a>
                   <form action="/clients/delete/@client.GetId()" method="post">
                     <input type="hidden" name="_method" value="DELETE">
                     <button type="submit" name=> Delete</button>
                   </form>
-               </li>
+                </li>
+              }
+            </ul>
             }
-          }
           else
           {
               <h2>@Model["stylist"].GetName() does not have any clients yet</h2>
-
           }
           <a href="/">return home</a>
       </div>

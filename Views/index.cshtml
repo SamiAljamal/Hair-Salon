@@ -23,9 +23,7 @@
         @foreach (var stylist in Model)
         {
           <li><h3><a href="/stylists/@stylist.GetId()/clients"> @stylist.GetName()</a></h3>
-              <form  action="/stylist/edit/@stylist.GetId()" method="get">
-                <button type="submit" name=> Edit</button>
-              </form>
+              <a href="/stylist/edit/@stylist.GetId()"><button type="button">Edit</button></a>
               <form action="/stylist/delete/@stylist.GetId()" method="post">
                 <input type="hidden" name="_method" value="DELETE">
                 <button type="submit" name=> Delete</button>

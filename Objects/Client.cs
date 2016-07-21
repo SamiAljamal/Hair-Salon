@@ -150,7 +150,6 @@ namespace Salon
       {
         this._name = rdr.GetString(0);
         this._stylist_id = rdr.GetInt32(1);
-
       }
 
       if (rdr != null)
@@ -212,10 +211,8 @@ namespace Salon
       while(rdr.Read())
       {
         foundClientName = rdr.GetString(0);
-        Console.WriteLine("hello");
         foundClientStylistId = rdr.GetInt32(1);
         foundClientId = rdr.GetInt32(2);
-        Console.WriteLine(foundClientId.ToString());
       }
       Client foundClient = new Client(
         foundClientName,

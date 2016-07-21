@@ -6,10 +6,7 @@
 
 Hair Salon project is an application using HTTP CRUD method to update and delete elements within the application.
 
-
-
-
-## Installation and how to run page.
+## Database setup
 To setup Database in SQLCMD:
   * open up the terminal
   * run the following command:
@@ -18,14 +15,20 @@ To setup Database in SQLCMD:
     * Go
     * USE hair_salon;
     * Go
-    * CREATE TABLE stylist (name VARCHARR(255), id INT IDENTITY(1,1));
+    * CREATE TABLE stylist (name VARCHAR(255), id INT IDENTITY(1,1));
     * Go
-    * CREATE TABLE clients (name VARCHARR(255), stylist_id INT,  id INT IDENTITY(1,1));
+    * CREATE TABLE clients (name VARCHAR(255), stylist_id INT,  id INT IDENTITY(1,1));
     * Go
-Following Database setup, to run the nancy app type in the following commands:
+
+## Installation and how to run page.
+ To run the nancy app type in the following commands:
   * type in the command dnu restore.
   * type in the command dnx Kestrel.
   * open up a web browser, and type  http://localhost:5004 in the url form.
+
+## Running the Test classes
+  To run tests on your methods:
+    * Open the command prompt and type in dnx test.
 
 
 ## Support and contact details

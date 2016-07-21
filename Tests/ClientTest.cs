@@ -72,12 +72,9 @@ namespace Salon
 
       //Act
       Client result = Client.Find(secondClient.GetId());
-
       string nameTest = result.GetName();
-      Console.WriteLine("From Find:  " + nameTest);
-
       string gaName = Client.GetAll()[1].GetName();
-      Console.WriteLine("From GetAll:  " + gaName);
+
 
       //Assert
       Assert.Equal("terry", nameTest);
@@ -96,8 +93,6 @@ namespace Salon
       List<Client> resultREstaurants = Client.GetAll();
       List<Client> testClientList = new List<Client> {secondClient};
 
-
-
       //Assert
       Assert.Equal(testClientList, resultREstaurants);
     }
@@ -111,12 +106,10 @@ namespace Salon
         Client secondClient = new Client("terry", 1);
         firstClient.Save();
         secondClient.Save();
-
         Client result = Client.Find(firstClient.GetId());
 
         //Act
         result.Update(secondClient.GetName(), secondClient.GetStylistId());
-
         Client updatedResult = Client.Find(firstClient.GetId());
 
         //Assert
@@ -131,7 +124,6 @@ namespace Salon
         //Arrange
         Stylist firstStylist = new Stylist("john");
         firstStylist.Save();
-
         Client firstClient = new Client("lardo", firstStylist.GetId());
 
         //Act
@@ -144,6 +136,7 @@ namespace Salon
     public void Dispose()
     {
       Client.DeleteAll();
+      Stylist.DeleteAll();
     }
   }
 }

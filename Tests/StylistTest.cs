@@ -72,13 +72,8 @@ namespace Salon
 
       //Act
       Stylist result = Stylist.Find(secondStylist.GetId());
-
       string nameTest = result.GetName();
-      Console.WriteLine("From Find:  " + nameTest);
-
       string gaName = Stylist.GetAll()[1].GetName();
-      Console.WriteLine("From GetAll:  " + gaName);
-
       //Assert
       Assert.Equal("bill", nameTest);
     }
@@ -147,6 +142,7 @@ namespace Salon
     public void Dispose()
     {
       Stylist.DeleteAll();
+      Client.DeleteAll();
     }
   }
 }
